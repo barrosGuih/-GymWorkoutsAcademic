@@ -5,6 +5,20 @@ from rich.align import Align
 treinos = []
 
 
+def validacao():   #TESTA SE A ENTRADA SERÁ SOMENTE NUMEROS INTEIROS.
+    while True:
+        try:
+            
+            option = int(input("Escolha uma das opções: "))
+
+            if 0 <= option <= 4:
+                return option
+            else:
+                print("[red]Valor invalido, tente novamente")
+                
+        except ValueError:
+            print("[red]Valor invalido, tente novamente")
+
 def menu_principal():
 
     print(Panel(Align.center("""
@@ -15,26 +29,8 @@ def menu_principal():
  [bold blue][0] - [white]Sair """),
         width=35,
         title="[bold blue]Menu Principal")) 
-    
-    option = (input("Escolha uma das opções: "))
 
-    def validacao():   #TESTA SE A ENTRADA SERÁ SOMENTE NUMEROS INTEIROS.
-       while True:
-            try:
-                print("[red]Valor invalido, tente novamente")
-                option = int(input("Escolha uma das opções: "))
-
-            except ValueError:
-                print("[red]Valor invalido, tente novamente")
-
-                if 4 < option < 0:
-                    print("[red]Valor invalido, tente novamente")
-                    menu_principal()
-                    option = int(input("Escolha uma das opções: "))
-
-            return option
-       
-    validacao()
+    option = validacao()
 
     if option == 1:
         adicionar_treino()
@@ -44,7 +40,8 @@ def menu_principal():
         exibir_treino()
     if option == 4:
         listar_exercicios_mes()
-
+    if option == 0:
+        return
 
 def adicionar_treino():
     data = input("Data (dd/mm/aaaa): ").strip()
@@ -72,16 +69,16 @@ def exibir_treino():
 def listar_exercicios_mes():
     pass
 
-
-aluno = input("Digite o primeiro nome do aluno: ").strip()
-
-if not aluno.isalpha():  #Verifica se foi digitado número, se sim pede o nome novamente.
-    print("[red]Nome invalido, tente novamente")
+while True:
     aluno = input("Digite o primeiro nome do aluno: ").strip()
 
-print(Panel(Align.center(f"[white]Seja bem-vindo, {aluno.capitalize()}![/white]"),
-        width=35,
-        border_style="white",
-        title="[bold blue]Academia"))
+    if aluno.isalpha():  #Verifica se foi digitado número, se sim pede o nome novamente.
+       break
+    print("[red]Nome invalido, tente novamente")
+
+    print(Panel(Align.center(f"[white]Seja bem-vindo, {aluno.capitalize()}![/white]"),
+            width=35,
+            border_style="white",
+            title="[bold blue]Academia"))
 
 menu_principal()
