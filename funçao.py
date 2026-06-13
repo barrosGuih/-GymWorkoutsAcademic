@@ -16,10 +16,9 @@ def adicionar_treino():
         "repeticoes": repeticoes
     }
 
-    treinos.append(treino)
+    treinos.append(treino)  
 
     print(Panel.fit(f" [green]Treino cadastrado com sucesso! "))
-
 
 def listar_treinos():
     pass
