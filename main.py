@@ -1,25 +1,23 @@
 from rich import print
 from rich.panel import Panel
 from rich.align import Align
+import time
 
-treinos = []
-
+treinos = {}
 
 def validacao():   #TESTA SE A ENTRADA SERÁ SOMENTE NUMEROS INTEIROS.
     while True:
         try:
-            
             option = int(input("Escolha uma das opções: "))
-
             if 0 <= option <= 4:
                 return option
             else:
-                print("[red]Valor invalido, tente novamente")
-                
+                print("[red]Valor invalido, tente novamente") 
         except ValueError:
             print("[red]Valor invalido, tente novamente")
 
 def menu_principal():
+ while True:
 
     print(Panel(Align.center("""
  [bold blue][1] - [white]Adicionar treino
@@ -33,35 +31,70 @@ def menu_principal():
     option = validacao()
 
     if option == 1:
+        time.sleep(1)
         adicionar_treino()
-    if option == 2:
+    elif option == 2:
         listar_treinos()
-    if option == 3:
+    elif option == 3:
         exibir_treino()
-    if option == 4:
+    elif option == 4:
         listar_exercicios_mes()
-    if option == 0:
-        return
+    elif option == 0:
+        print("[yellow]Saindo do sistema...")
+        break
 
 def adicionar_treino():
     data = input("Data (dd/mm/aaaa): ").strip()
-    exercicio = input("Nome do exercício: ").strip()
-    series = int(input("Número de séries: ")).strip()
-    repeticoes = int(input("Número de repetições: ")).strip()
 
-    treino = {
-        "data": data,
-        "exercicio": exercicio,
+    if not data:
+        print("Erro: A data nao pode ser vazia")
+        return
+    
+    if data not in treinos:
+        treinos[data] = []
+    
+    while True:
+        exercicio = input("Nome do exercício: ").strip()
+        if not exercicio:
+            print("Erro: o nome do exercicio nao pode ser vazia")
+            continue
+
+        try:
+            series = int(input("Número de séries: "))
+            repeticoes = int(input("Número de repetições: "))
+
+            if series <= 0 or repeticoes <= 0:
+                print("Erro: nao pode ser menor ou igual a 0")
+                continue
+        except ValueError:
+            print("Digite so numeros inteiros validos")
+            continue
+
+        exercicio = {
+        "nome": exercicio,
         "series": series,
         "repeticoes": repeticoes
-    }
+        }
 
-    treinos.append(treino)  
+        treinos[data].append(exercicio)  
+        print(Panel.fit(f"\n [green]Treino cadastrado com sucesso! \n"))
 
-    print(Panel.fit(f" [green]Treino cadastrado com sucesso! "))
+        loopOpcao = input(f"Deseja adicionar outro exercicio na mesma data ({data})? (S/N): ").format(data).strip().upper()
+        if loopOpcao != "S":
+            break
 
 def listar_treinos():
-    pass
+    if not treinos:
+        print("[yellow]Nenhum treino cadastrado!")
+        return
+    
+    print("Treinos cadastrados:")
+
+    for data in treinos:
+        print(f"[bold]Data: {data}[/bold]")
+    
+    for info in treinos[data]:
+        print(Panel.fit(f" - {info['nome']},  series: {info['series']}   repeticoes: {info['repeticoes']}"))
 
 def exibir_treino():
     pass
@@ -76,9 +109,9 @@ while True:
        break
     print("[red]Nome invalido, tente novamente")
 
-    print(Panel(Align.center(f"[white]Seja bem-vindo, {aluno.capitalize()}![/white]"),
-            width=35,
-            border_style="white",
-            title="[bold blue]Academia"))
+print(Panel(Align.center(f"[white]Seja bem-vindo, {aluno.capitalize()}![/white]"),
+    width=35,
+    border_style="white",
+    title="[bold blue]Academia"))
 
 menu_principal()
