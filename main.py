@@ -34,17 +34,20 @@ def menu_principal():
         time.sleep(1)
         adicionar_treino()
     elif option == 2:
+        time.sleep(1)
         listar_treinos()
     elif option == 3:
+        time.sleep(1)
         exibir_treino()
     elif option == 4:
+        time.sleep(1)
         listar_exercicios_mes()
     elif option == 0:
         print("[yellow]Saindo do sistema...")
         break
 
 def adicionar_treino():
-    data = input("Data (dd/mm/aaaa): ").strip()
+    data = input("Data (dd/mm/aaaa): ").strip()## colocar verificacao na data
 
     if not data:
         print("Erro: A data nao pode ser vazia")
@@ -90,17 +93,62 @@ def listar_treinos():
     
     print("Treinos cadastrados:")
 
-    for data in treinos:
+    for data in treinos: ## descrever...
         print(f"[bold]Data: {data}[/bold]")
     
     for info in treinos[data]:
         print(Panel.fit(f" - {info['nome']},  series: {info['series']}   repeticoes: {info['repeticoes']}"))
 
 def exibir_treino():
-    pass
+    if not treinos:
+        print("[yellow]Nenhum treino cadastrado!")
+        return
+
+    diaEscolhidoEncontrado = False
+
+    diaEscolhido = input("Digite o dia(dd/mm/aaaa) que voce quer saber o treino: ")
+    for data in treinos:
+        DiaVerificado = data[0:]
+        if DiaVerificado == diaEscolhido:
+            diaEscolhidoEncontrado = True
+            print(f"\n[bold blue]Data: {data}[/bold blue]")
+            
+            
+            for exercicios in treinos[data]:
+                print(f" - {exercicios['nome']} ({exercicios['series']}x{exercicios['repeticoes']})")
+        else:
+            print("[yellow]Nenhum treino encontrado nessa data")
+            time.sleep(1)
+            continue
+
 
 def listar_exercicios_mes():
-    pass
+    if not treinos:
+        print("[yellow]Nenhum treino cadastrado!")
+        return
+    
+    mes = input("Selecione o mes (1-12): ").strip() ## tratar erros de entradas incorretas
+
+    if len(mes) == 1:
+        mes = "0" + mes
+    
+    encontrou = False
+
+    for data in treinos:
+        mesData = data[3:5] ## se o cara colocar 12/05/2026  queremos o index 3 e 4 no caso 05
+        if mesData == mes:
+            encontrou = True
+            print(f"\n[bold blue]Data: {data}[/bold blue]")
+            
+            
+            for exercicios in treinos[data]:
+                print(f" - {exercicios['nome']} ({exercicios['series']}x{exercicios['repeticoes']})")
+
+    if not encontrou:
+        print(f"[red]Nenhum treino encontrado para o mês {mes}.")
+
+
+
 
 while True:
     aluno = input("Digite o primeiro nome do aluno: ").strip()
