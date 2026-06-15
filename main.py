@@ -61,7 +61,7 @@ def menu_principal():
         break
 
 while True:                      
-    aluno = Prompt.ask("[white]Digite o primeiro nome do aluno[/white]").strip()
+    aluno = Prompt.ask("[white]Digite o primeiro nome do aluno(a)[/white]").strip()
 
     if aluno.isalpha():  #Verifica se foi digitado número, se sim pede o nome novamente.
        break
@@ -69,7 +69,7 @@ while True:
 
 treinos = carregar_txt(aluno) 
 
-print(Panel(Align.center(f"[white]Seja bem-vindo a [yellow]AGE FITNESS[/yellow], {aluno.capitalize()}![/white]"),
+print(Panel(Align.center(f"[white]Seja bem-vindo(a) a [yellow]AGE FITNESS[/yellow], {aluno.capitalize()}![/white]"),
         width=35,
         border_style="white",
         title="[bold blue]Academia AGE Fitness"))

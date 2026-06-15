@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 def adicionar_treino(treinos, aluno):
     # ===== VALIDAÇÃO DA DATA =====
     dataAtual = datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
-    recebeData = Prompt.ask("[white]Data (dd/mm/aaaa)[/white]").strip()
+    recebeData = Prompt.ask("[white]Data (dd mm aaaa)[/white]").strip()
     if len(recebeData.split()) < 3:
         print("[red]Erro: Insiria uma data completa.")
         return

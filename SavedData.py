@@ -24,7 +24,7 @@ def carregar_txt(aluno_atual):
                 # Removemos o "Aluno: " e os espaços extras para comparar
                 nome_no_arquivo = partes[0].replace("Aluno:", "").strip()
 
-                # AGORA A COMPARAÇÃO É EXATA: "gui" == "gui" (True) | "gui" == "guilherme" (False)
+                # A COMPARAÇÃO É EXATA: "gui" == "gui" (True) 
                 if nome_no_arquivo.lower() == aluno_atual.lower():
                     try:
                         data = partes[1].replace("Data ", "").strip()
